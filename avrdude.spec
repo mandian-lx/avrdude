@@ -16,6 +16,7 @@ BuildRequires: libusb-devel
 BuildRequires: texi2html
 BuildRequires: texinfo
 BuildRequires: tetex-dvips
+BuildRequires: tetex-latex
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 
