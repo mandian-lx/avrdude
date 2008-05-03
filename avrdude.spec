@@ -1,26 +1,23 @@
-Name:           avrdude
-Version:        5.5
-Release:        3%{?dist}
-Summary:        Software for programming Atmel AVR Microcontroller
-
-Group:          Applications/Engineering
-License:        GPLv2+
-URL:            http://www.nongnu.org/avrdude
-Source0:        http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
-Patch0: 	avrdude-5.5.usbtiny.64bit.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-BuildRequires:  flex
-BuildRequires:  bison
-BuildRequires:  readline-devel
-BuildRequires:  ncurses-devel
-BuildRequires:  libusb-devel
-BuildRequires:  texi2html
-BuildRequires:  texinfo-tex
-BuildRequires:  tetex-dvips
+Name: avrdude
+Version: 5.5
+Release: %mkrel 1
+Summary: Software for programming Atmel AVR Microcontroller
+Group: Development/Other
+License: GPLv2+
+URL: http://www.nongnu.org/avrdude
+Source0: http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
+Patch0: avrdude-5.5.usbtiny.64bit.patch
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires: flex
+BuildRequires: bison
+BuildRequires: readline-devel
+BuildRequires: ncurses-devel
+BuildRequires: libusb-devel
+BuildRequires: texi2html
+BuildRequires: texinfo
+BuildRequires: tetex-dvips
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
-
 
 %description
 AVRDUDE is a program for programming Atmel's AVR CPU's. It can program the 
@@ -29,7 +26,6 @@ can program fuse and lock bits. AVRDUDE also supplies a direct instruction
 mode allowing one to issue any programming instruction to the AVR chip 
 regardless of whether AVRDUDE implements that specific feature of a 
 particular chip.
-
 
 %prep
 %setup -q
@@ -42,41 +38,32 @@ mv ChangeLog-2003~ ChangeLog-2003
 iconv -f ISO88591 -t UTF8 < NEWS > NEWS~
 mv NEWS~ NEWS
 
-
-
-
 %build
 %configure --enable-doc --sysconfdir=%{_sysconfdir}/%{name}
+# Parallel build is broken as by 5.5
 make
 
-
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
-mv $RPM_BUILD_ROOT/%{_docdir}/%{name}-%{version} installed-docs
-rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-
+rm -rf %buildroot
+make install DESTDIR=%buildroot
+mv %buildroot/%{_docdir}/%{name}-%{version} installed-docs
+rm -f %buildroot%{_infodir}/dir
 
 %clean
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %buildroot
 
 %post
 /sbin/install-info %{_infodir}/%{name}.info %{_infodir}/dir || :
-
 
 %preun
 if [ $1 = 0 ]; then
     /sbin/install-info --delete %{_infodir}/%{name}.info %{_infodir}/dir || :
 fi
 
-
 %files
 %defattr(-,root,root,-)
 %doc README AUTHORS ChangeLog* COPYING NEWS doc/TODO installed-docs/*
 %config(noreplace) %{_sysconfdir}/%{name}
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.gz
-%{_infodir}/%{name}.info.gz
-
-
+%{_mandir}/man1/%{name}.1*
+%{_infodir}/%{name}.info*
