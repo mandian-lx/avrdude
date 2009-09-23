@@ -1,12 +1,11 @@
 Name: avrdude
-Version: 5.5
-Release: %mkrel 4
+Version: 5.8
+Release: %mkrel 1
 Summary: Software for programming Atmel AVR Microcontroller
 Group: Development/Other
 License: GPLv2+
 URL: http://www.nongnu.org/avrdude
 Source0: http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
-Patch0: avrdude-5.5.usbtiny.64bit.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: flex
 BuildRequires: bison
@@ -30,7 +29,6 @@ particular chip.
 
 %prep
 %setup -q
-%patch0 -p1
 chmod -x safemode.c doc/TODO
 sed -i 's|/usr/local/etc/avrdude.conf|/etc/avrdude/avrdude.conf|g' doc/avrdude.texi avrdude.1
 sed -i 's|/etc/avrdude.conf|/etc/avrdude/avrdude.conf|g' doc/avrdude.texi avrdude.1
