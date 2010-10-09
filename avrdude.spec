@@ -1,23 +1,22 @@
 Name: avrdude
 Version: 5.10
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Software for programming Atmel AVR Microcontroller
 Group: Development/Other
 License: GPLv2+
 URL: http://www.nongnu.org/avrdude
 Source0: http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: flex
-BuildRequires: bison
-BuildRequires: readline-devel
-BuildRequires: ncurses-devel
-BuildRequires: libusb-devel
-BuildRequires: texi2html
-BuildRequires: texinfo
-BuildRequires: tetex-dvips
-BuildRequires: tetex-latex
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
+BuildRequires: 		flex
+BuildRequires: 		bison
+BuildRequires: 		readline-devel
+BuildRequires: 		ncurses-devel
+BuildRequires: 		libusb-devel
+BuildRequires: 		texi2html
+BuildRequires: 		texinfo
+BuildRequires: 		tetex-dvips
+BuildRequires: 		tetex-latex
+Requires(post): 	/sbin/install-info
+Requires(preun): 	/sbin/install-info
 
 %description
 AVRDUDE is a program for programming Atmel's AVR CPU's. It can program the 
