@@ -1,6 +1,6 @@
 Name: avrdude
-Version: 5.10
-Release: %mkrel 2
+Version: 5.11.1
+Release: %mkrel 1
 Summary: Software for programming Atmel AVR Microcontroller
 Group: Development/Other
 License: GPLv2+
@@ -13,8 +13,8 @@ BuildRequires: 		ncurses-devel
 BuildRequires: 		libusb-devel
 BuildRequires: 		texi2html
 BuildRequires: 		texinfo
-BuildRequires: 		tetex-dvips
-BuildRequires: 		tetex-latex
+BuildRequires: 		texlive-dvips
+BuildRequires: 		texlive-latex
 Requires(post): 	/sbin/install-info
 Requires(preun): 	/sbin/install-info
 
@@ -39,16 +39,12 @@ mv NEWS~ NEWS
 %build
 %configure --enable-doc --sysconfdir=%{_sysconfdir}/%{name}
 # Parallel build is broken as by 5.5
-make
+%make
 
 %install
-rm -rf %buildroot
-make install DESTDIR=%buildroot
+%makeinstall_std DESTDIR=%buildroot
 mv %buildroot/%{_docdir}/%{name}-%{version} installed-docs
 rm -f %buildroot%{_infodir}/dir
-
-%clean
-rm -rf %buildroot
 
 %post
 /sbin/install-info %{_infodir}/%{name}.info %{_infodir}/dir || :
@@ -59,7 +55,6 @@ if [ $1 = 0 ]; then
 fi
 
 %files
-%defattr(-,root,root,-)
 %doc README AUTHORS ChangeLog* COPYING NEWS doc/TODO installed-docs/*
 %config(noreplace) %{_sysconfdir}/%{name}
 %{_bindir}/%{name}
