@@ -39,7 +39,7 @@ mv NEWS~ NEWS
 %build
 %configure --enable-doc --sysconfdir=%{_sysconfdir}/%{name}
 # Parallel build is broken as by 5.5
-%make
+make
 
 %install
 %makeinstall_std DESTDIR=%buildroot
