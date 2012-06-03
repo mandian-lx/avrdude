@@ -1,22 +1,24 @@
-Name: avrdude
-Version: 5.11.1
-Release: %mkrel 1
-Summary: Software for programming Atmel AVR Microcontroller
-Group: Development/Other
-License: GPLv2+
-URL: http://www.nongnu.org/avrdude
-Source0: http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
-BuildRequires: 		flex
-BuildRequires: 		bison
-BuildRequires: 		readline-devel
-BuildRequires: 		ncurses-devel
-BuildRequires: 		libusb-devel
-BuildRequires: 		texi2html
-BuildRequires: 		texinfo
-BuildRequires: 		texlive-dvips
-BuildRequires: 		texlive-latex
-Requires(post): 	/sbin/install-info
-Requires(preun): 	/sbin/install-info
+Name:		avrdude
+Version:	5.11.1
+Release:	%mkrel 2
+Summary:	Software for programming Atmel AVR Microcontroller
+Group:		Development/Other
+License:	GPLv2+
+URL:		http://www.nongnu.org/avrdude
+Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
+BuildRequires:	flex
+BuildRequires:	bison
+BuildRequires:	readline-devel
+BuildRequires:	ncurses-devel
+BuildRequires:	libusb-devel
+BuildRequires:	texi2html
+BuildRequires:	texinfo
+BuildRequires:	texlive-dvips
+BuildRequires:	texlive-latex
+%if %{mdvver} < 201200
+Requires(post)	/sbin/install-info
+Requires(preun):/sbin/install-info
+%endif
 
 %description
 AVRDUDE is a program for programming Atmel's AVR CPU's. It can program the 
@@ -42,17 +44,17 @@ mv NEWS~ NEWS
 make
 
 %install
-%makeinstall_std DESTDIR=%buildroot
-mv %buildroot/%{_docdir}/%{name}-%{version} installed-docs
-rm -f %buildroot%{_infodir}/dir
+%makeinstall_std DESTDIR=%{buildroot}
+mv %{buildroot}%{_docdir}/%{name}-%{version} installed-docs
+rm -f %{buildroot}%{_infodir}/dir
 
+%if %{mdvver} < 201200
 %post
-/sbin/install-info %{_infodir}/%{name}.info %{_infodir}/dir || :
+%_install_info %{name}
 
 %preun
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/%{name}.info %{_infodir}/dir || :
-fi
+%_remove_install_info %{name}
+%endif
 
 %files
 %doc README AUTHORS ChangeLog* COPYING NEWS doc/TODO installed-docs/*
