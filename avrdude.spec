@@ -16,8 +16,8 @@ BuildRequires:	texinfo
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-latex
 %if %{mdvver} < 201200
-Requires(post)	/sbin/install-info
-Requires(preun):/sbin/install-info
+Requires(post):	info-install
+Requires(preun):info-install
 %endif
 
 %description
