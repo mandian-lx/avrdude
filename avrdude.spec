@@ -10,7 +10,7 @@ BuildRequires: 		flex
 BuildRequires: 		bison
 BuildRequires: 		readline-devel
 BuildRequires: 		ncurses-devel
-BuildRequires: 		libusb-devel
+BuildRequires: 		pkgconfig(libusb-1.0)
 BuildRequires: 		texi2html
 BuildRequires: 		texinfo
 BuildRequires: 		texlive-dvips
