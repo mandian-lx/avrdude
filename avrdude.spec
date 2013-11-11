@@ -1,6 +1,6 @@
 Name: avrdude
-Version: 5.11.1
-Release: 2
+Version: 6.0.1
+Release: 1
 Summary: Software for programming Atmel AVR Microcontroller
 Group: Development/Other
 License: GPLv2+
